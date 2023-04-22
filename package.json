@@ -19,9 +19,17 @@
 		"commit": "git pull && git add -A && git-cz && git push"
 	},
 	"dependencies": {
+		"@types/redux-promise": "^0.5.29",
+		"git-cz": "^4.9.0",
+		"immer": "^10.0.1",
 		"lint-staged": "^13.2.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-redux": "^8.0.5",
+		"redux": "^4.2.1",
+		"redux-persist": "^6.0.0",
+		"redux-promise": "^0.6.0",
+		"redux-thunk": "^2.4.2",
 		"vite-plugin-eslint": "^1.8.1"
 	},
 	"devDependencies": {
