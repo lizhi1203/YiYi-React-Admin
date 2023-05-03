@@ -5,9 +5,11 @@ import reduxThunk from "redux-thunk";
 // 需要安装@types/redux-promise类型
 import reduxPromise from "redux-promise";
 import global from "./modules/global/reducer";
+import auth from "./modules/auth/reducer";
 
 const reducer = combineReducers({
-	global
+	global,
+	auth
 });
 
 const persistConfig = {

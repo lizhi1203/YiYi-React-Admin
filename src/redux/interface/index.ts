@@ -16,3 +16,10 @@ export interface GlobalState {
 	language: string;
 	themeConfig: ThemeConfigProp;
 }
+
+export interface AuthState {
+	authButtons: {
+		[key: string]: any;
+	};
+	authRouter: string[];
+}
