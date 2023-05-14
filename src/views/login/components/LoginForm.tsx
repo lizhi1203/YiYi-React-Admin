@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import md5 from "js-md5";
+import { loginApi } from "@/api/modules/login";
 import { setToken } from "@/redux/modules/global/action";
 import { useTranslation } from "react-i18next";
 import { Form, Input, Button, message } from "antd";
@@ -16,11 +17,12 @@ const LoginForm = (props: any) => {
 	const { setToken } = props;
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const onFinish = (loginForm: Login.ReqLoginForm) => {
+	const onFinish = async (loginForm: Login.ReqLoginForm) => {
 		try {
 			setLoading(true);
 			loginForm.password = md5(loginForm.password);
-			setToken("111");
+			const { data } = await loginApi(loginForm);
+			setToken(data?.access_token);
 			message.success("登录成功");
 			navigate(HOME_URL);
 		} finally {
@@ -36,7 +38,7 @@ const LoginForm = (props: any) => {
 		<Form
 			form={form}
 			name="basic"
-			labelCol={{ span: 6 }}
+			labelCol={{ span: 5 }}
 			initialValues={{ remember: true }}
 			onFinish={onFinish}
 			onFinishFailed={onFinishFailed}
