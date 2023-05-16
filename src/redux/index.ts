@@ -6,10 +6,14 @@ import reduxThunk from "redux-thunk";
 import reduxPromise from "redux-promise";
 import global from "./modules/global/reducer";
 import auth from "./modules/auth/reducer";
+import menu from "./modules/menu/reducer";
+import breadcurmb from "./modules/breadcrumb/reducer";
 
 const reducer = combineReducers({
 	global,
-	auth
+	auth,
+	menu,
+	breadcurmb
 });
 
 const persistConfig = {

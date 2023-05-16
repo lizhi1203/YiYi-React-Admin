@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { produce } from "immer";
-import * as types from "@/redux/interface/index";
+import * as types from "@/redux/mutation-types";
 import { AuthState } from "@/redux/interface/index";
 
 const authState: AuthState = {

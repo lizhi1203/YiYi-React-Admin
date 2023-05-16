@@ -5,3 +5,9 @@ export const SET_AUTH_BUTTONS = "SET_AUTH_BUTTONS";
 export const SET_AUTH_ROUTER = "SET_AUTH_ROUTER";
 
 export const SET_TOKEN = "SET_TOKEN";
+
+export const UPDATE_COLLAPSE = "SET_ASIDE_COLLAPSE";
+
+export const SET_MENU_LIST = "SET_MENU_LIST";
+
+export const SET_BREADCRUMB_LIST = "SET_BREADCRUMB_LIST";

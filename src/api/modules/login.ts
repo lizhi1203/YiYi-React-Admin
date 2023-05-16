@@ -5,3 +5,7 @@ import { PORT1 } from "@/api/config/servicePort";
 export const loginApi = (loginForm: Login.ReqLoginForm) => {
 	return baseService.post<Login.ResLogin>(PORT1 + "/login", loginForm);
 };
+
+export const getAuthButtons = () => {
+	return baseService.get<Login.ResAuthButtons>(PORT1 + "/auth/buttons");
+};

@@ -23,3 +23,14 @@ export interface AuthState {
 	};
 	authRouter: string[];
 }
+
+export interface MenuState {
+	isCollapse: boolean;
+	menuList: Menu.MenuOptions[];
+}
+
+export interface BreadcrumbState {
+	breadcrumbList: {
+		[propName: string]: any;
+	};
+}
