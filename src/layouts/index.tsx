@@ -5,6 +5,7 @@ import { setAuthButtons } from "@/redux/modules/auth/action";
 import { updateCollapse } from "@/redux/modules/menu/action";
 import { getAuthButtons } from "@/api/modules/login";
 import { Layout } from "antd";
+import LayoutMenu from "./components/Menu";
 import "./index.less";
 
 const LayoutIndex = (props: any) => {
@@ -33,7 +34,9 @@ const LayoutIndex = (props: any) => {
 
 	return (
 		<section className="container">
-			<Sider trigger={null} collapsed={props.isCollapse} width={200} theme="dark"></Sider>
+			<Sider trigger={null} collapsed={props.isCollapse} width={200} theme="dark">
+				<LayoutMenu></LayoutMenu>
+			</Sider>
 			<Layout>
 				<Content>
 					Layout<Outlet></Outlet>

@@ -9,3 +9,7 @@ export const loginApi = (loginForm: Login.ReqLoginForm) => {
 export const getAuthButtons = () => {
 	return baseService.get<Login.ResAuthButtons>(PORT1 + "/auth/buttons");
 };
+
+export const getMenuList = () => {
+	return baseService.get<Menu.MenuOptions[]>(PORT1 + "/menu/list");
+};
