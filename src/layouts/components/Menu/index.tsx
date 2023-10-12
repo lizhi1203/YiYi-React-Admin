@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setMenuList } from "@/redux/modules/menu/action";
-import { getOpenKeys } from "@/utils/util";
+import { setBreadCrumbList } from "@/redux/modules/breadcrumb/action";
+import { setAuthRouter } from "@/redux/modules/auth/action";
+import { getOpenKeys, findAllBreadcrumb, handleRouter, searchRoute } from "@/utils/util";
 import { Menu, Spin } from "antd";
 import * as Icons from "@ant-design/icons";
 import { getMenuList } from "@/api/modules/login";
@@ -10,7 +12,7 @@ import type { MenuProps } from "antd";
 
 const LayoutMenu = (props: any) => {
 	const { pathname } = useLocation();
-	const { isCollapse, setMenuList: setMenuListAction } = props;
+	const { isCollapse, setBreadCrumbList, setAuthRouter, setMenuList: setMenuListAction } = props;
 	const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
 	const [openKeys, setOpenKeys] = useState<string[]>([]);
 
@@ -57,6 +59,9 @@ const LayoutMenu = (props: any) => {
 			const { data } = await getMenuList();
 			if (!data) return;
 			setMenuList(deepLoopFloat(data));
+			setBreadCrumbList(findAllBreadcrumb(data));
+			const dynamicRouer = handleRouter(data);
+			setAuthRouter(dynamicRouer);
 			setMenuListAction(data);
 		} finally {
 			setLoading(false);
@@ -67,6 +72,13 @@ const LayoutMenu = (props: any) => {
 		getMenuData();
 	}, []);
 
+	const navigate = useNavigate();
+	const clickMenu: MenuProps["onClick"] = ({ key }: { key: string }) => {
+		const route = searchRoute(key, props.menuList);
+		if (route.isLink) window.open(route.isLink, "_blank");
+		navigate(key);
+	};
+
 	return (
 		<Spin spinning={loading} tip="loading...">
 			<Menu
@@ -76,11 +88,12 @@ const LayoutMenu = (props: any) => {
 				openKeys={openKeys}
 				selectedKeys={selectedKeys}
 				items={menuList}
+				onClick={clickMenu}
 			></Menu>
 		</Spin>
 	);
 };
 
 const mapStateToProps = (state: any) => state.menu;
-const mapDispatchToProps = { setMenuList };
+const mapDispatchToProps = { setMenuList, setBreadCrumbList, setAuthRouter };
 export default connect(mapStateToProps, mapDispatchToProps)(LayoutMenu);
