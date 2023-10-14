@@ -9,6 +9,8 @@ import { Menu, Spin } from "antd";
 import * as Icons from "@ant-design/icons";
 import { getMenuList } from "@/api/modules/login";
 import type { MenuProps } from "antd";
+import "./index.less";
+import Logo from "./components/Logo";
 
 const LayoutMenu = (props: any) => {
 	const { pathname } = useLocation();
@@ -46,7 +48,7 @@ const LayoutMenu = (props: any) => {
 	const deepLoopFloat = (menuList: Menu.MenuOptions[], newArr: MenuItem[] = []) => {
 		menuList.forEach((item: Menu.MenuOptions) => {
 			if (!item?.children?.length) return newArr.push(getItem(item.title, item.path, addIcon(item.icon!)));
-			newArr.push(getItem(item.title, item.path, addIcon(item.icon!)), deepLoopFloat(item.children));
+			newArr.push(getItem(item.title, item.path, addIcon(item.icon!), deepLoopFloat(item.children)));
 		});
 		return newArr;
 	};
@@ -60,8 +62,8 @@ const LayoutMenu = (props: any) => {
 			if (!data) return;
 			setMenuList(deepLoopFloat(data));
 			setBreadCrumbList(findAllBreadcrumb(data));
-			const dynamicRouer = handleRouter(data);
-			setAuthRouter(dynamicRouer);
+			const dynamicRouter = handleRouter(data);
+			setAuthRouter(dynamicRouter);
 			setMenuListAction(data);
 		} finally {
 			setLoading(false);
@@ -79,18 +81,29 @@ const LayoutMenu = (props: any) => {
 		navigate(key);
 	};
 
+	const onOpenChange = (openKeys: string[]) => {
+		if (openKeys.length === 0 || openKeys.length === 1) return setOpenKeys(openKeys);
+		const latestOpenKey = openKeys[openKeys.length - 1];
+		if (latestOpenKey.includes(openKeys[0])) return setOpenKeys(openKeys);
+		setOpenKeys([latestOpenKey]);
+	};
+
 	return (
-		<Spin spinning={loading} tip="loading...">
-			<Menu
-				theme="dark"
-				mode="inline"
-				triggerSubMenuAction="click"
-				openKeys={openKeys}
-				selectedKeys={selectedKeys}
-				items={menuList}
-				onClick={clickMenu}
-			></Menu>
-		</Spin>
+		<div className="menu">
+			<Spin spinning={loading} tip="loading...">
+				<Logo></Logo>
+				<Menu
+					theme="dark"
+					mode="inline"
+					triggerSubMenuAction="click"
+					openKeys={openKeys}
+					selectedKeys={selectedKeys}
+					items={menuList}
+					onClick={clickMenu}
+					onOpenChange={onOpenChange}
+				></Menu>
+			</Spin>
+		</div>
 	);
 };
 
