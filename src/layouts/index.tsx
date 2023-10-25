@@ -6,6 +6,7 @@ import { updateCollapse } from "@/redux/modules/menu/action";
 import { getAuthButtons } from "@/api/modules/login";
 import { Layout } from "antd";
 import LayoutMenu from "./components/Menu";
+import LayoutHeader from "./components/Header";
 import "./index.less";
 
 const LayoutIndex = (props: any) => {
@@ -38,6 +39,7 @@ const LayoutIndex = (props: any) => {
 				<LayoutMenu></LayoutMenu>
 			</Sider>
 			<Layout>
+				<LayoutHeader></LayoutHeader>
 				<Content>
 					Layout<Outlet></Outlet>
 				</Content>
