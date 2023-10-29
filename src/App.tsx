@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { setLanguage } from "@/redux/modules/global/action";
 import { ConfigProvider } from "antd";
+import useTheme from "@/hooks/useTheme";
 import i18n from "i18next";
 import zhCN from "antd/lib/locale/zh_CN";
 import enUS from "antd/lib/locale/en_US";
@@ -11,8 +12,11 @@ import AuthRouter from "@/routers/utils/authRouter";
 import Router from "@/routers/index";
 
 function App(props: any) {
-	const { setLanguage, language, assemblySize } = props;
+	const { setLanguage, language, themeConfig, assemblySize } = props;
 	const [i18nLocale, setI18nLocale] = useState(zhCN);
+
+	// 全局使用主题
+	useTheme(themeConfig);
 
 	const setAntdLanguage = () => {
 		if (language && language == "zh") return setI18nLocale(zhCN);
